@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="index.html">zurück</a>
+    <script>  
+        window.onload = () => {
+        const accessToken = new URLSearchParams(window.location.hash.substring(1)).get("access_token");
+        if (accessToken) {
+            localStorage.setItem("spotifyAccessToken", accessToken);
+            window.location.href = "/"; // Weiter zur Startseite
+        } else {
+            alert("Kein Access Token gefunden.");
+        }
+    };
+    </script>
+</body>
+</html>
