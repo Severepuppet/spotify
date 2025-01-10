@@ -2,7 +2,7 @@
         let playlistLink;
         // Spotify API-Konfiguration
         const clientId = "adb14e73d6a54b8fb6212c66a18475dd"; // Deine Spotify Client-ID
-        const redirectUri = "https://severepuppet.github.io/spotify"; // Deine Redirect-URL
+        const redirectUri = "https://severepuppet.github.io/spotify/callback"; // Deine Redirect-URL
         const scopes = [
             "user-read-playback-state",
             "user-modify-playback-state",
