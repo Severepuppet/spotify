@@ -98,7 +98,8 @@ function nextSong() {
 
 // Song abspielen
 function playSong(trackUri) {
-    window.location.href = `spotify:${trackUri}`;
+    const webLink = `https://open.spotify.com/track/${trackUri.split(":")[2]}`;
+    window.location.href = webLink;
 }
 
 // Event-Listener für Play-Button
