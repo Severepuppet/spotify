@@ -1,10 +1,10 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Web Player</title>
-    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>  <!-- SDK einbinden -->
 </head>
 <body>
     <h1>Spotify Web Player</h1>
@@ -13,64 +13,66 @@
     <button id="prev-btn">Previous</button>
 
     <script>
-        // Spotify Player initialisieren
-        const player = new Spotify.Player({
-            name: 'Spotify Web Player',
-            getOAuthToken: cb => { cb(localStorage.getItem("spotifyAccessToken")); },
-            volume: 0.5
-        });
+        // Callback-Funktion, die vom Spotify SDK erwartet wird
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            const player = new Spotify.Player({
+                name: 'Spotify Web Player',
+                getOAuthToken: cb => { cb(localStorage.getItem("spotifyAccessToken")); },
+                volume: 0.5
+            });
 
-        // Fehlerbehandlung
-        player.on('initialization_error', e => { console.error('Initialization error:', e); });
-        player.on('authentication_error', e => { console.error('Authentication error:', e); });
-        player.on('account_error', e => { console.error('Account error:', e); });
-        player.on('playback_error', e => { console.error('Playback error:', e); });
+            // Fehlerbehandlung
+            player.on('initialization_error', e => { console.error('Initialization error:', e); });
+            player.on('authentication_error', e => { console.error('Authentication error:', e); });
+            player.on('account_error', e => { console.error('Account error:', e); });
+            player.on('playback_error', e => { console.error('Playback error:', e); });
 
-        // Wenn der Player bereit ist
-        player.on('ready', ({ device_id }) => {
-            console.log('Player ist bereit. Device ID:', device_id);
-            // Beispiel-Song abspielen
-            playSong('spotify:track:YOUR_TRACK_URI');
-        });
+            // Wenn der Player bereit ist
+            player.on('ready', ({ device_id }) => {
+                console.log('Player ist bereit. Device ID:', device_id);
+                // Beispiel-Song abspielen
+                playSong('spotify:track:YOUR_TRACK_URI');
+            });
 
-        // Player verbinden
-        player.connect().then(success => {
-            if (success) {
-                console.log('Der Web Playback SDK ist bereit!');
+            // Player verbinden
+            player.connect().then(success => {
+                if (success) {
+                    console.log('Der Web Playback SDK ist bereit!');
+                }
+            });
+
+            // Song abspielen
+            function playSong(trackUri) {
+                player.play({
+                    uris: [trackUri]
+                }).then(() => {
+                    console.log('Playback gestartet');
+                }).catch(err => {
+                    console.error('Fehler beim Abspielen:', err);
+                });
             }
-        });
 
-        // Song abspielen
-        function playSong(trackUri) {
-            player.play({
-                uris: [trackUri]
-            }).then(() => {
-                console.log('Playback gestartet');
-            }).catch(err => {
-                console.error('Fehler beim Abspielen:', err);
+            // Play/Pause
+            document.getElementById('play-btn').addEventListener('click', () => {
+                player.togglePlay().then(() => {
+                    console.log('Play/Pause umgeschaltet');
+                });
             });
-        }
 
-        // Play/Pause
-        document.getElementById('play-btn').addEventListener('click', () => {
-            player.togglePlay().then(() => {
-                console.log('Play/Pause umgeschaltet');
+            // Nächster Track
+            document.getElementById('next-btn').addEventListener('click', () => {
+                player.nextTrack().then(() => {
+                    console.log('Nächster Track');
+                });
             });
-        });
 
-        // Nächster Track
-        document.getElementById('next-btn').addEventListener('click', () => {
-            player.nextTrack().then(() => {
-                console.log('Nächster Track');
+            // Vorheriger Track
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                player.previousTrack().then(() => {
+                    console.log('Vorheriger Track');
+                });
             });
-        });
-
-        // Vorheriger Track
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            player.previousTrack().then(() => {
-                console.log('Vorheriger Track');
-            });
-        });
+        };
     </script>
 </body>
 </html>
