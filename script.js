@@ -50,6 +50,35 @@ async function validateAccessToken(token) {
 
 console.log("Auth URL:", authUrl); // Prüfen, ob die URL korrekt ist
 
+// Player initialisieren
+const player = new Spotify.Player({
+    name: 'Spotify Web Player',
+    getOAuthToken: cb => { cb(localStorage.getItem("spotifyAccessToken")); },
+    volume: 0.5  // Lautstärke (0 bis 1)
+  });
+  
+  // Fehlerbehandlung
+  player.on('initialization_error', e => { console.error('Initialization error:', e); });
+  player.on('authentication_error', e => { console.error('Authentication error:', e); });
+  player.on('account_error', e => { console.error('Account error:', e); });
+  player.on('playback_error', e => { console.error('Playback error:', e); });
+  
+  // Sobald der Player bereit ist, verbinden
+  player.on('ready', ({ device_id }) => {
+    console.log('Player ist bereit. Device ID:', device_id);
+  
+    // Wenn du einen Song abspielen möchtest, kannst du dies hier tun
+    // Beispiel: Song abspielen, sobald der Player bereit ist
+    playSong('spotify:track:YOUR_TRACK_URI');
+  });
+  
+  // Verbinde den Player
+  player.connect().then(success => {
+    if (success) {
+      console.log('Der Web Playback SDK ist bereit!');
+    }
+  });
+
 // Playlist-Titel abfragen
 async function getPlaylistTracks(playlistUrl) {
     const playlistId = playlistUrl.split('/').pop().split('?')[0];  // Playlist-ID extrahieren
