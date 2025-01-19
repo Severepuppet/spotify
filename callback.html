@@ -8,15 +8,20 @@
 <body>
     <a href="index.html">zurück</a>
     <script>  
-        window.onload = () => {
-        const accessToken = new URLSearchParams(window.location.hash.substring(1)).get("access_token");
+       const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get("access_token");
+
         if (accessToken) {
+            // Speichere das Access Token im LocalStorage
             localStorage.setItem("spotifyAccessToken", accessToken);
-            window.location.href = "/"; // Weiter zur Startseite
+
+            // Weiterleitung zur Hauptseite
+            window.location.href = "https://severepuppet.github.io/spotify/";
         } else {
-            alert("Kein Access Token gefunden.");
+            console.error("Kein Access Token in der URL gefunden.");
+            alert("Fehler: Kein Access Token erhalten.");
         }
-    };
     </script>
 </body>
 </html>

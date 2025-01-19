@@ -48,6 +48,8 @@ async function validateAccessToken(token) {
     }
 }
 
+console.log("Auth URL:", authUrl); // Prüfen, ob die URL korrekt ist
+
 // Playlist-Titel abfragen
 async function getPlaylistTracks(playlistUrl) {
     const playlistId = playlistUrl.split('/').pop().split('?')[0];  // Playlist-ID extrahieren
