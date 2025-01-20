@@ -27,14 +27,14 @@
             // Wenn der Player bereit ist
             player.on('ready', ({ device_id }) => {
                 console.log('Player ist bereit. Device ID:', device_id);
-                playSong('spotify:track:7KqDHJzHI9xFL45wBekguY');
+                playSong(device_id, 'spotify:track:7KqDHJzHI9xFL45wBekguY');
             });
 
             // Player verbinden
             player.connect();
 
             // Funktion zum Abspielen des Songs
-            function playSong(trackUri) {
+            function playSong(device_id, trackUri) {
                 fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
                     method: 'PUT',
                     body: JSON.stringify({ uris: [trackUri] }),
