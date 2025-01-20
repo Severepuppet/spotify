@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Web Player</title>
-    <script src="https://sdk.scdn.co/spotify-player.js"></script>  <!-- SDK einbinden -->
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <!-- SDK einbinden -->
 </head>
 <body>
     <h1>Spotify Web Player</h1>
@@ -43,14 +44,15 @@
 
             // Song abspielen
             function playSong(trackUri) {
-                player.play({
-                    uris: [trackUri]
-                }).then(() => {
-                    console.log('Playback gestartet');
-                }).catch(err => {
-                    console.error('Fehler beim Abspielen:', err);
-                });
+            player.play({
+                uris: [trackUri]
+            }).then(() => {
+                console.log('Playback gestartet');
+            }).catch(err => {
+                console.error('Fehler beim Abspielen:', err);
+            });
             }
+
 
             // Play/Pause
             document.getElementById('play-btn').addEventListener('click', () => {
