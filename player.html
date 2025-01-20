@@ -10,42 +10,87 @@
     <h1>Spotify Web Player</h1>
 
     <script>
-        // Callback-Funktion für Spotify SDK
-        window.onSpotifyWebPlaybackSDKReady = () => {
-            const player = new Spotify.Player({
-                name: 'Spotify Web Player',
-                getOAuthToken: cb => { cb(localStorage.getItem("spotifyAccessToken")); },
-                volume: 0.5
-            });
-
-            // Fehlerbehandlung
-            player.on('initialization_error', e => console.error('Initialization error:', e));
-            player.on('authentication_error', e => console.error('Authentication error:', e));
-            player.on('account_error', e => console.error('Account error:', e));
-            player.on('playback_error', e => console.error('Playback error:', e));
-
-            // Wenn der Player bereit ist
-            player.on('ready', ({ device_id }) => {
-                console.log('Player ist bereit. Device ID:', device_id);
-                playSong(device_id, 'spotify:track:7KqDHJzHI9xFL45wBekguY');
-            });
-
-            // Player verbinden
-            player.connect();
-
-            // Funktion zum Abspielen des Songs
-            function playSong(device_id, trackUri) {
-                fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ uris: [trackUri] }),
+        let device_id;
+    
+        // Funktion zum Abrufen der Device-ID
+        function getDeviceId() {
+            return new Promise((resolve, reject) => {
+                const accessToken = localStorage.getItem("spotifyAccessToken"); // Holen des Tokens aus dem localStorage
+    
+                // Sicherstellen, dass ein Token vorhanden ist
+                if (!accessToken) {
+                    console.log("Kein Access-Token gefunden.");
+                    reject('Kein Access-Token gefunden');
+                    return;
+                }
+    
+                // API-Anfrage, um die verfügbaren Geräte zu bekommen
+                fetch('https://api.spotify.com/v1/me/player/devices', {
+                    method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem("spotifyAccessToken")}`
+                        'Authorization': `Bearer ${accessToken}`
                     }
-                }).then(() => console.log('Playback gestartet'))
-                  .catch(err => console.error('Fehler beim Abspielen:', err));
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.devices && data.devices.length > 0) {
+                        device_id = data.devices[0].id; // Nimmt das erste verfügbare Gerät
+                        console.log("Device ID:", device_id);
+                        resolve(device_id); // Gibt die Device-ID zurück
+                    } else {
+                        console.log("Kein Gerät gefunden.");
+                        reject('Kein Gerät gefunden');
+                    }
+                })
+                .catch(error => {
+                    console.error('Fehler beim Abrufen der Geräte:', error);
+                    reject(error);
+                });
+            });
+        }
+    
+        // Callback-Funktion für Spotify SDK
+        window.onSpotifyWebPlaybackSDKReady = async () => {
+            try {
+                const device_id = await getDeviceId(); // Warte auf die Device-ID
+                const player = new Spotify.Player({
+                    name: 'Spotify Web Player',
+                    getOAuthToken: cb => { cb(localStorage.getItem("spotifyAccessToken")); },
+                    volume: 0.5
+                });
+    
+                // Fehlerbehandlung
+                player.on('initialization_error', e => console.error('Initialization error:', e));
+                player.on('authentication_error', e => console.error('Authentication error:', e));
+                player.on('account_error', e => console.error('Account error:', e));
+                player.on('playback_error', e => console.error('Playback error:', e));
+    
+                // Wenn der Player bereit ist
+                player.on('ready', ({ device_id }) => {
+                    console.log('Player ist bereit. Device ID:', device_id);
+                    playSong(device_id, 'spotify:track:7KqDHJzHI9xFL45wBekguY');
+                });
+    
+                // Player verbinden
+                player.connect();
+    
+                // Funktion zum Abspielen des Songs
+                function playSong(device_id, trackUri) {
+                    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ uris: [trackUri] }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem("spotifyAccessToken")}`
+                        }
+                    }).then(() => console.log('Playback gestartet'))
+                      .catch(err => console.error('Fehler beim Abspielen:', err));
+                }
+            } catch (error) {
+                console.error("Fehler beim Abrufen der Device-ID:", error);
             }
         };
     </script>
+    
 </body>
 </html>
