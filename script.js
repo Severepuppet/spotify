@@ -6,9 +6,6 @@ const scopes = [
     "user-read-playback-state",
     "user-modify-playback-state",
     "streaming",
-    "app-remote-control",
-    "user-read-currently-playing",
-    "user-library-read"
 ].join("%20"); // Correctly join the scopes
 
 
