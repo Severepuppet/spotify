@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Spotify Web Player</h1>
-
+    <button onclick="testsong();"> play test</button>
     <script>
         let device_id;
     
@@ -68,11 +68,15 @@
                 // Wenn der Player bereit ist
                 player.on('ready', ({ device_id }) => {
                     console.log('Player ist bereit. Device ID:', device_id);
-                    playSong(device_id, 'spotify:track:7KqDHJzHI9xFL45wBekguY');
+                    
                 });
     
                 // Player verbinden
                 player.connect();
+
+                function testsong(){
+                    playSong(device_id, 'spotify:track:7KqDHJzHI9xFL45wBekguY');
+                }
     
                 // Funktion zum Abspielen des Songs
                 function playSong(device_id, trackUri) {
