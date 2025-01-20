@@ -6,8 +6,11 @@ const scopes = [
     "user-read-playback-state",
     "user-modify-playback-state",
     "streaming",
-].join("%20"); // Correctly join the scopes
-
+    "app-remote-control",        // Falls nötig für Remote Control
+    "user-read-currently-playing", // Falls du den aktuellen Song abfragen willst
+    "user-library-read",           // Falls du auf die Bibliothek zugreifen möchtest
+    "web-playback"                 // Hinzufügen des Scopes für Web Playback
+].join("%20"); // Korrekt die Scopes verbinden
 
 let accessToken = localStorage.getItem("spotifyAccessToken"); // Holen des Tokens aus dem localStorage
 
