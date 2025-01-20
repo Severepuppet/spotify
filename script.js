@@ -6,8 +6,7 @@ const scopes = [
     "streaming",
     "user-read-playback-state",
     "user-modify-playback-state",
-    "app-remote-control",
-    "web-playback"
+    "app-remote-control"
 ].join("%20");
 
 let accessToken = localStorage.getItem("spotifyAccessToken"); // Holen des Tokens aus dem localStorage
