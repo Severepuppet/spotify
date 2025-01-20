@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Spotify Web Player</h1>
-    <button onclick="testsong();"> play test</button>
+    <button onclick="testsong();">Play Test</button>
     <script>
         let device_id;
     
@@ -52,7 +52,7 @@
         // Callback-Funktion für Spotify SDK
         window.onSpotifyWebPlaybackSDKReady = async () => {
             try {
-                const device_id = await getDeviceId(); // Warte auf die Device-ID
+                const deviceId = await getDeviceId(); // Warte auf die Device-ID
                 const player = new Spotify.Player({
                     name: 'Spotify Web Player',
                     getOAuthToken: cb => { cb(localStorage.getItem("spotifyAccessToken")); },
@@ -68,33 +68,44 @@
                 // Wenn der Player bereit ist
                 player.on('ready', ({ device_id }) => {
                     console.log('Player ist bereit. Device ID:', device_id);
-                    
+                    // Wenn der Player bereit ist, speichern wir die Device ID
+                    device_id = device_id;
                 });
     
                 // Player verbinden
                 player.connect();
 
-                function testsong(){
-                    playSong(device_id, 'spotify:track:7KqDHJzHI9xFL45wBekguY');
-                }
-    
                 // Funktion zum Abspielen des Songs
-                function playSong(device_id, trackUri) {
-                    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
-                        method: 'PUT',
-                        body: JSON.stringify({ uris: [trackUri] }),
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem("spotifyAccessToken")}`
-                        }
-                    }).then(() => console.log('Playback gestartet'))
-                      .catch(err => console.error('Fehler beim Abspielen:', err));
+                async function playSong() {
+                    if (!device_id) {
+                        console.error("Kein Gerät verfügbar.");
+                        return;
+                    }
+                    const trackUri = 'spotify:track:7KqDHJzHI9xFL45wBekguY';
+                    try {
+                        await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+                            method: 'PUT',
+                            body: JSON.stringify({ uris: [trackUri] }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${localStorage.getItem("spotifyAccessToken")}`
+                            }
+                        });
+                        console.log('Playback gestartet');
+                    } catch (err) {
+                        console.error('Fehler beim Abspielen:', err);
+                    }
                 }
+
+                // Funktion, die den Test-Track startet
+                window.testsong = function() {
+                    playSong();
+                };
+
             } catch (error) {
                 console.error("Fehler beim Abrufen der Device-ID:", error);
             }
         };
     </script>
-    
 </body>
 </html>
