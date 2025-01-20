@@ -9,6 +9,7 @@
 <body>
     <h1>Spotify Web Player</h1>
     <button onclick="testsong();">Play Test</button>
+    <button onclick="pauseSong();">Pause Song</button>
     <script>
         let device_id;
     
@@ -97,9 +98,33 @@
                     }
                 }
 
+                async function pauseSong() {
+                    if (!device_id) {
+                        console.error("Kein Gerät verfügbar.");
+                        return;
+                    }
+                    try {
+                        await fetch(`https://api.spotify.com/v1/me/player/pause?device_id=${device_id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem("spotifyAccessToken")}`
+                            }
+                        });
+                        console.log('Song pausiert');
+                    } catch (err) {
+                        console.error('Fehler beim Pausieren:', err);
+                    }
+                }
+
+
+
                 // Funktion, die den Test-Track startet
                 window.testsong = function() {
                     playSong();
+                };
+
+                window.pauseSong = function() {
+                    pauseSong();
                 };
 
             } catch (error) {
