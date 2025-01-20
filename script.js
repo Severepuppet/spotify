@@ -1,5 +1,4 @@
-let trackUris;
-let playlistLink;
+
 // Spotify API-Konfiguration
 const clientId = "adb14e73d6a54b8fb6212c66a18475dd"; // Deine Spotify Client-ID
 const redirectUri = "https://severepuppet.github.io/spotify/callback"; // Deine Redirect-URL
@@ -7,7 +6,11 @@ const scopes = [
     "user-read-playback-state",
     "user-modify-playback-state",
     "streaming",
-];
+    "app-remote-control", // Neuer Scope für Remote Control
+    "user-read-currently-playing", // Zum aktuellen Track lesen
+    "user-library-read" // Zugriff auf Bibliothek
+].join("%20"); // Scopes korrekt verbinde
+
 let accessToken = localStorage.getItem("spotifyAccessToken"); // Holen des Tokens aus dem localStorage
 
 // URL für Spotify-Login generieren
@@ -51,7 +54,7 @@ async function validateAccessToken(token) {
 console.log("Auth URL:", authUrl); // Prüfen, ob die URL korrekt ist
 
 
-
+/*
 // Playlist-Titel abfragen
 async function getPlaylistTracks(playlistUrl) {
     const playlistId = playlistUrl.split('/').pop().split('?')[0];  // Playlist-ID extrahieren
@@ -105,4 +108,4 @@ function playSong(trackUri) {
 }
 
 // Event-Listener für Play-Button
-document.getElementById("play-btn").addEventListener("click", nextSong);
+document.getElementById("play-btn").addEventListener("click", nextSong); */
