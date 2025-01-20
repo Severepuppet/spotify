@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Web Player</title>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
-  <!-- SDK einbinden -->
 </head>
 <body>
     <h1>Spotify Web Player</h1>
-    <button id="play-btn">Play/Pause</button>
-    <button id="next-btn">Next</button>
-    <button id="prev-btn">Previous</button>
 
     <script>
-        // Callback-Funktion, die vom Spotify SDK erwartet wird
+        // Callback-Funktion für Spotify SDK
         window.onSpotifyWebPlaybackSDKReady = () => {
             const player = new Spotify.Player({
                 name: 'Spotify Web Player',
@@ -23,57 +19,32 @@
             });
 
             // Fehlerbehandlung
-            player.on('initialization_error', e => { console.error('Initialization error:', e); });
-            player.on('authentication_error', e => { console.error('Authentication error:', e); });
-            player.on('account_error', e => { console.error('Account error:', e); });
-            player.on('playback_error', e => { console.error('Playback error:', e); });
+            player.on('initialization_error', e => console.error('Initialization error:', e));
+            player.on('authentication_error', e => console.error('Authentication error:', e));
+            player.on('account_error', e => console.error('Account error:', e));
+            player.on('playback_error', e => console.error('Playback error:', e));
 
             // Wenn der Player bereit ist
             player.on('ready', ({ device_id }) => {
                 console.log('Player ist bereit. Device ID:', device_id);
-                // Beispiel-Song abspielen
                 playSong('spotify:track:7KqDHJzHI9xFL45wBekguY');
             });
 
             // Player verbinden
-            player.connect().then(success => {
-                if (success) {
-                    console.log('Der Web Playback SDK ist bereit!');
-                }
-            });
+            player.connect();
 
-            // Song abspielen
+            // Funktion zum Abspielen des Songs
             function playSong(trackUri) {
-            player.play({
-                uris: [trackUri]
-            }).then(() => {
-                console.log('Playback gestartet');
-            }).catch(err => {
-                console.error('Fehler beim Abspielen:', err);
-            });
+                fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ uris: [trackUri] }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("spotifyAccessToken")}`
+                    }
+                }).then(() => console.log('Playback gestartet'))
+                  .catch(err => console.error('Fehler beim Abspielen:', err));
             }
-
-
-            // Play/Pause
-            document.getElementById('play-btn').addEventListener('click', () => {
-                player.togglePlay().then(() => {
-                    console.log('Play/Pause umgeschaltet');
-                });
-            });
-
-            // Nächster Track
-            document.getElementById('next-btn').addEventListener('click', () => {
-                player.nextTrack().then(() => {
-                    console.log('Nächster Track');
-                });
-            });
-
-            // Vorheriger Track
-            document.getElementById('prev-btn').addEventListener('click', () => {
-                player.previousTrack().then(() => {
-                    console.log('Vorheriger Track');
-                });
-            });
         };
     </script>
 </body>
