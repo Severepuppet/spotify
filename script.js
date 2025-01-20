@@ -6,15 +6,16 @@ const scopes = [
     "user-read-playback-state",
     "user-modify-playback-state",
     "streaming",
-    "app-remote-control", // Neuer Scope für Remote Control
-    "user-read-currently-playing", // Zum aktuellen Track lesen
-    "user-library-read" // Zugriff auf Bibliothek
-].join("%20"); // Scopes korrekt verbinde
+    "app-remote-control",
+    "user-read-currently-playing",
+    "user-library-read"
+].join("%20"); // Correctly join the scopes
+
 
 let accessToken = localStorage.getItem("spotifyAccessToken"); // Holen des Tokens aus dem localStorage
 
 // URL für Spotify-Login generieren
-const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&scope=${scopes.join("%20")}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&scope=${scopes}&redirect_uri=${encodeURIComponent(redirectUri)}`;
 
 // Event-Listener für Login-Button
 document.getElementById("login-btn").addEventListener("click", () => {
