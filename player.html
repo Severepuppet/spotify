@@ -12,7 +12,8 @@
     <h1>Spotify Web Player</h1>
     <button onclick="testsong();">Play Test</button>
     <button onclick="pauseSong();">Pause Song</button>
-    <form onsubmit="playlist(); return false;"><input id="inputPlaylistlink" type="text" placeholder="Playlist URL"></form>
+    <form onsubmit="playlist(); return false;"><input id="inputPlaylistlink" type="text" placeholder="Playlist URL">
+    </form>
     <script>
         let trackUris;
         let device_id;
@@ -85,7 +86,7 @@
                         console.error("Kein Gerät verfügbar.");
                         return;
                     }
-                    const trackUri = 'spotify:track:7KqDHJzHI9xFL45wBekguY';
+                    const trackUri = trackUris.shift();
                     try {
                         await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
                             method: 'PUT',
@@ -154,11 +155,20 @@
                         trackUris = tracks.map(track => track.track.uri);  // Nur die URIs der Tracks extrahieren
                         console.log("Tracks in der Playlist:", trackUris);
                         return trackUris;
+                        shuffleArray(trackUris);
                     } else {
                         console.error("Fehler beim Abrufen der Playlist-Titel:", await response.json());
                         alert("Fehler beim Abrufen der Playlist!");
                         return [];
                     }
+                }
+
+                function shuffleArray(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]]; // Elemente tauschen
+                    }
+                    return array;
                 }
 
 
