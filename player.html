@@ -86,7 +86,7 @@
                         console.error("Kein Gerät verfügbar.");
                         return;
                     }
-                    getCurrentSongData();
+                    
                     const trackUri = trackUris.shift();
                     try {
                         await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
@@ -101,7 +101,7 @@
                     } catch (err) {
                         console.error('Fehler beim Abspielen:', err);
                     }
-
+                    getCurrentSongData();
                 }
 
                 async function pauseSong() {
