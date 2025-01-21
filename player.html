@@ -12,6 +12,7 @@
     <h1>Spotify Web Player</h1>
     <button onclick="testsong();">Play Test</button>
     <button onclick="pauseSong();">Pause Song</button>
+    <button onclick="songInfo();">song info</button>
     <form onsubmit="playlist(); return false;"><input id="inputPlaylistlink" type="text" placeholder="Playlist URL">
     </form>
     <script>
@@ -101,7 +102,6 @@
                     } catch (err) {
                         console.error('Fehler beim Abspielen:', err);
                     }
-                    getCurrentSongData();
                 }
 
                 async function pauseSong() {
@@ -131,6 +131,10 @@
 
                 window.pauseSong = function () {
                     pauseSong();
+                };
+
+                window.songInfo = function () {
+                    getCurrentSongData();
                 };
 
                 window.playlist = function () {
