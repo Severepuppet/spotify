@@ -12,7 +12,7 @@
     <h1>Spotify Web Player</h1>
     <button onclick="testsong();">Play Test</button>
     <button onclick="pauseSong();">Pause Song</button>
-    <form onsubmit="playlist();"><input id="inputPlaylistlink" type="text" placeholder="Playlist URL"></form>
+    <form onsubmit="playlist(); return false;"><input id="inputPlaylistlink" type="text" placeholder="Playlist URL"></form>
     <script>
         let trackUris;
         let device_id;
