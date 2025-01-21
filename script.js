@@ -51,7 +51,9 @@ async function validateAccessToken(token) {
 
 console.log("Auth URL:", authUrl); // Prüfen, ob die URL korrekt ist
 
-
+document.getElementById("play-btn").addEventListener("click", () => {
+    window.location.href = `player.html`;
+});
 /*
 // Playlist-Titel abfragen
 async function getPlaylistTracks(playlistUrl) {
