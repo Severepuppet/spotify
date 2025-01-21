@@ -154,13 +154,15 @@
                         // Speichern der Tracks in einem Array
                         trackUris = tracks.map(track => track.track.uri);  // Nur die URIs der Tracks extrahieren
                         console.log("Tracks in der Playlist:", trackUris);
-                        return trackUris;
                         shuffleArray(trackUris);
+                        return trackUris;
+                        
                     } else {
                         console.error("Fehler beim Abrufen der Playlist-Titel:", await response.json());
                         alert("Fehler beim Abrufen der Playlist!");
                         return [];
                     }
+                    
                 }
 
                 function shuffleArray(array) {
