@@ -11,7 +11,7 @@ const scopes = [
     "playlist-read-collaborative"
 ].join("%20");
 
-let accessToken = localStorage.getItem("spotifyAccessToken"); // Holen des Tokens aus dem localStorage
+
 
 // URL für Spotify-Login generieren
 const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&scope=${scopes}&redirect_uri=${encodeURIComponent(redirectUri)}`;
