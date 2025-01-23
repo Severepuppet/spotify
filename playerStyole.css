@@ -5,6 +5,7 @@ body{
     flex-direction: column;
 }
 #container{
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -29,4 +30,5 @@ body{
 #SongInfoName,
 #SongInfoArtist{
     display: none;
+    text-align: center;
 }
