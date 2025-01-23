@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (accessToken) {
         document.getElementById("play-btn").disabled = false;
         console.log("Access Token erhalten:", accessToken);
-        window.location.href = `player.html`;
+       // window.location.href = `player.html`;
     } else {
         document.getElementById("play-btn").disabled = true;
         console.log("Kein Access Token gefunden.");
