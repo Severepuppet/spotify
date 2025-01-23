@@ -15,6 +15,7 @@ const scopes = [
 
 // URL für Spotify-Login generieren
 const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&scope=${scopes}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+let accessToken;
 
 // Event-Listener für Login-Button
 document.getElementById("login-btn").addEventListener("click", () => {
