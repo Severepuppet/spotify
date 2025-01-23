@@ -138,7 +138,6 @@
                     if (isPlaying) {
                         pauseSong();
                         songInfo();
-                        showInfo();
                         
                     }
                     else {
@@ -226,6 +225,7 @@
                             document.getElementById("SongInfoDate").innerHTML = releaseDate.split("-")[0];
                             document.getElementById("SongInfoName").innerHTML = trackName;
                             document.getElementById("SongInfoArtist").innerHTML = artistName;
+                            showInfo();
 
                         } else {
                             console.error("Fehler beim Abrufen des aktuellen Songs:", await response.json());
