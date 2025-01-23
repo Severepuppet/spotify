@@ -137,10 +137,12 @@
                     document.getElementById("start").style.display = "none";
                     if (isPlaying) {
                         pauseSong();
+                        showInfo();
                         songInfo();
                     }
                     else {
                         playSong();
+                        hideInfo();
                     }
 
                 };
@@ -234,9 +236,17 @@
 
                 // Funktion aufrufen
 
+                function hideInfo(){
+                    document.getElementById("SongInfoDate").style.display = "none";
+                    document.getElementById("SongInfoName").style.display = "none";
+                    document.getElementById("SongInfoArtist").style.display = "none";
+                }
 
-
-
+                function showInfo(){
+                    document.getElementById("SongInfoDate").style.display = "";
+                    document.getElementById("SongInfoName").style.display = "";
+                    document.getElementById("SongInfoArtist").style.display = "";
+                }
 
 
             } catch (error) {
