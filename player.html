@@ -154,6 +154,7 @@
 
                 window.playlist = function () {
                     playlistLink = document.getElementById("inputPlaylistlink").value;
+                    document.getElementById("inputPlaylistlink").value = "";
                     console.log(playlistLink);
                     getPlaylistTracks(playlistLink);
                 };
