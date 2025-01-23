@@ -214,7 +214,7 @@
                             console.log("Aktueller Song:", trackName);
                             console.log("Künstler:", artistName);
                             console.log("Veröffentlichungsdatum:", releaseDate);
-                            document.getElementById("SongInfoDate").innerHTML = releaseDate;
+                            document.getElementById("SongInfoDate").innerHTML = releaseDate.split("-")[0];
 
                         } else {
                             console.error("Fehler beim Abrufen des aktuellen Songs:", await response.json());
