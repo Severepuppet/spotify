@@ -11,11 +11,12 @@
 <body>
     <h1>Spotify Web Player</h1>
     <button onclick="testsong();">Play Test</button>
-    <button onclick="pauseSong();">Pause Song</button>
     <button onclick="songInfo();">song info</button>
+    <div id="SongInfoDate"></div>
     <form onsubmit="playlist(); return false;"><input id="inputPlaylistlink" type="text" placeholder="Playlist URL">
     </form>
     <script>
+        let isPlaying = false;
         let trackUris;
         let device_id;
         const accessToken = localStorage.getItem("spotifyAccessToken"); // Holen des Tokens aus dem localStorage
@@ -102,6 +103,7 @@
                     } catch (err) {
                         console.error('Fehler beim Abspielen:', err);
                     }
+                    isPlaying  = true;
                 }
 
                 async function pauseSong() {
@@ -120,19 +122,24 @@
                     } catch (err) {
                         console.error('Fehler beim Pausieren:', err);
                     }
+                    isPlaying = false;
                 }
 
 
 
                 // Funktion, die den Test-Track startet
                 window.testsong = function () {
-                    playSong();
+                    if (isPlaying){
+                        pauseSong();
+                        songInfo();
+                    }
+                    else {
+                        playSong();
+                    }
+                    
                 };
 
-                window.pauseSong = function () {
-                    pauseSong();
-                };
-
+               
                 window.songInfo = function () {
                     getCurrentSongData();
                 };
@@ -207,6 +214,7 @@
                             console.log("Aktueller Song:", trackName);
                             console.log("Künstler:", artistName);
                             console.log("Veröffentlichungsdatum:", releaseDate);
+                            document.getElementById("SongInfoDate").innerHTML = releaseDate;
 
                         } else {
                             console.error("Fehler beim Abrufen des aktuellen Songs:", await response.json());
