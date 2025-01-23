@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (accessToken) {
         document.getElementById("play-btn").disabled = false;
         console.log("Access Token erhalten:", accessToken);
-       // window.location.href = `player.html`;
+       
     } else {
         document.getElementById("play-btn").disabled = true;
         console.log("Kein Access Token gefunden.");
@@ -54,6 +54,9 @@ async function validateAccessToken(token) {
 
 console.log("Auth URL:", authUrl); // Prüfen, ob die URL korrekt ist
 
+document.getElementById("play-btn").addEventListener("click", () => {
+     window.location.href = `player.html`;
+});
 
 /*
 // Playlist-Titel abfragen
