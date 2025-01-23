@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Web Player</title>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <link rel="stylesheet" href="playerStyole.css">
 </head>
 
 <body>
     <h1>Spotify Web Player</h1>
-    <div onclick="playPauseSong();">
+    <div onclick="playPauseSong();" id="container">
         <div>play/pause</div>
+        <div id="SongInfoName"></div>
         <div id="SongInfoDate"></div>
+        <div id="SongInfoartist"></div>
     </div>
 
     <form onsubmit="playlist(); return false;"><input id="inputPlaylistlink" type="text" placeholder="Playlist URL">
@@ -217,6 +220,8 @@
                             console.log("Künstler:", artistName);
                             console.log("Veröffentlichungsdatum:", releaseDate);
                             document.getElementById("SongInfoDate").innerHTML = releaseDate.split("-")[0];
+                            document.getElementById("SongInfoName").innerHTML = trackName;
+                            document.getElementById("SongInfoArtist").innerHTML = artistName;
 
                         } else {
                             console.error("Fehler beim Abrufen des aktuellen Songs:", await response.json());

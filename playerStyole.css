@@ -1,0 +1,17 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vw;
+    width: 60vw;
+    background-color: rgb(206, 0, 96);
+    font-size: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 10%;
+}
