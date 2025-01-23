@@ -10,9 +10,11 @@
 
 <body>
     <h1>Spotify Web Player</h1>
-    <button onclick="testsong();">Play Test</button>
-    <button onclick="songInfo();">song info</button>
-    <div id="SongInfoDate"></div>
+    <div onclick="playPauseSong();">
+        <div>play/pause</div>
+        <div id="SongInfoDate"></div>
+    </div>
+
     <form onsubmit="playlist(); return false;"><input id="inputPlaylistlink" type="text" placeholder="Playlist URL">
     </form>
     <script>
@@ -88,7 +90,7 @@
                         console.error("Kein Gerät verfügbar.");
                         return;
                     }
-                    
+
                     const trackUri = trackUris.shift();
                     try {
                         await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
@@ -103,7 +105,7 @@
                     } catch (err) {
                         console.error('Fehler beim Abspielen:', err);
                     }
-                    isPlaying  = true;
+                    isPlaying = true;
                 }
 
                 async function pauseSong() {
@@ -128,18 +130,18 @@
 
 
                 // Funktion, die den Test-Track startet
-                window.testsong = function () {
-                    if (isPlaying){
+                window.playPauseSong = function () {
+                    if (isPlaying) {
                         pauseSong();
                         songInfo();
                     }
                     else {
                         playSong();
                     }
-                    
+
                 };
 
-               
+
                 window.songInfo = function () {
                     getCurrentSongData();
                 };
@@ -225,7 +227,7 @@
                 }
 
                 // Funktion aufrufen
-                
+
 
 
 
