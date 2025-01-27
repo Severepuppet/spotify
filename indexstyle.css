@@ -1,0 +1,65 @@
+/* indexstyle.css */
+
+/* Grundlegende Reset-Stile */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #222222; /* Dunkler Hintergrund für den Spotify-Stil */
+    color: #ffffff; /* Weiße Schriftfarbe */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh; /* Vollbildhöhe */
+    text-align: center;
+}
+
+#logo {
+    max-width: 450px; /* Maximale Breite des Logos */
+    margin-bottom: 50px; /* Abstand unter dem Logo */
+
+}
+
+.button-container {
+
+    display: flex; /* Flexbox für die Buttons */
+
+    gap: 20px; /* Abstand zwischen den Buttons */
+
+}
+
+
+.button {
+
+    max-width: 200px; /* Maximale Breite der Buttons */
+
+    cursor: pointer; /* Zeigt an, dass die Bilder klickbar sind */
+
+    transition: transform 0.2s; /* Animation für Hover-Effekt */
+
+}
+
+
+.button:hover {
+
+    transform: scale(1.05); /* Vergrößert das Bild beim Hover */
+
+}
+
+
+@media (max-width: 600px) {
+    #logo {
+        max-width: 200px; /* Kleinere Logo-Breite auf mobilen Geräten */
+    }
+
+    .button {
+
+        max-width: 100px; /* Kleinere Buttons auf mobilen Geräten */
+
+    }
+}
